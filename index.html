@@ -1,0 +1,2425 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>БЕНЕТОИТ М1 — Роботы для строительства будущего</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --bg-alt: #f5f7fb;
+    --bg-card: #ffffff;
+    --text: #0a0e1a;
+    --text-muted: #5a6275;
+    --border: #e4e8f0;
+    --accent: #007f7c;
+    --accent-2: #00a8a5;
+    --accent-glow: rgba(0, 127, 124, 0.35);
+    --gradient: linear-gradient(135deg, #007f7c 0%, #00a8a5 100%);
+    --shadow: 0 10px 40px rgba(10, 14, 26, 0.08);
+    --shadow-hover: 0 20px 60px rgba(0, 127, 124, 0.25);
+  }
+
+  [data-theme="dark"] {
+    --bg: #0a0e1a;
+    --bg-alt: #111827;
+    --bg-card: #161b2c;
+    --text: #f5f7fb;
+    --text-muted: #9aa3b8;
+    --border: #242a3d;
+    --accent: #00b3b0;
+    --accent-2: #33d4d0;
+    --accent-glow: rgba(0, 179, 176, 0.4);
+    --shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+    --shadow-hover: 0 20px 60px rgba(0, 179, 176, 0.35);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    transition: background 0.4s ease, color 0.4s ease;
+    overflow-x: hidden;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* ===== Header ===== */
+  header {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    transition: all 0.3s ease;
+  }
+
+  [data-theme="dark"] header {
+    background: rgba(10, 14, 26, 0.8);
+  }
+
+  .nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 0;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 800;
+    font-size: 20px;
+    letter-spacing: 0.5px;
+    text-decoration: none;
+  }
+
+  .logo-svg {
+    height: 40px;
+    width: auto;
+    transition: transform 0.3s ease;
+  }
+
+  .logo:hover .logo-svg {
+    transform: scale(1.05);
+  }
+
+  .logo-text {
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: color 0.2s ease;
+  }
+
+  .nav-links a:hover { color: var(--accent); }
+
+  .theme-toggle {
+    background: var(--bg-alt);
+    border: 1px solid var(--border);
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+  }
+
+  .theme-toggle:hover {
+    transform: rotate(20deg);
+    border-color: var(--accent);
+  }
+
+  .burger {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: var(--text);
+  }
+
+  /* ===== Hero ===== */
+  .hero {
+    padding: 160px 0 100px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -200px; right: -200px;
+    width: 600px; height: 600px;
+    background: var(--gradient);
+    border-radius: 50%;
+    opacity: 0.15;
+    filter: blur(80px);
+    animation: float 8s ease-in-out infinite;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -200px; left: -200px;
+    width: 500px; height: 500px;
+    background: linear-gradient(135deg, #00a8a5, #007f7c);
+    border-radius: 50%;
+    opacity: 0.1;
+    filter: blur(80px);
+    animation: float 10s ease-in-out infinite reverse;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(30px, -30px); }
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 60px;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: var(--bg-alt);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-muted);
+    margin-bottom: 24px;
+  }
+
+  .hero-badge::before {
+    content: '';
+    width: 8px; height: 8px;
+    background: #10b981;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #10b981;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+
+  .hero h1 {
+    font-size: clamp(36px, 5vw, 60px);
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 24px;
+    letter-spacing: -1px;
+  }
+
+  .hero h1 .gradient {
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero p {
+    font-size: 18px;
+    color: var(--text-muted);
+    margin-bottom: 24px;
+    max-width: 520px;
+  }
+
+  .hero-slogan {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 16px;
+    padding: 16px 20px;
+    background: var(--bg-alt);
+    border-left: 4px solid var(--accent);
+    border-radius: 12px;
+    line-height: 1.4;
+  }
+
+  .hero-description {
+    font-size: 15px;
+    color: var(--text-muted);
+    margin-bottom: 28px;
+    max-width: 520px;
+    line-height: 1.7;
+  }
+
+  .hero-buttons {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    padding: 14px 28px;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .btn-primary {
+    background: var(--gradient);
+    color: white;
+    box-shadow: 0 8px 24px var(--accent-glow);
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px var(--accent-glow);
+  }
+
+  .btn-secondary {
+    background: var(--bg-card);
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+
+  .btn-secondary:hover {
+    background: linear-gradient(135deg, #007f7c 0%, #00a8a5 100%);
+    color: #ffffff;
+    border-color: transparent;
+    box-shadow: 0 10px 30px rgba(0, 127, 124, 0.55), 0 0 20px rgba(0, 168, 165, 0.4);
+    transform: translateY(-2px);
+  }
+
+  .hero-image {
+    position: relative;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    aspect-ratio: 4/3;
+  }
+
+  .hero-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+  }
+
+  .hero-image:hover img { transform: scale(1.05); }
+
+  .hero-stats {
+    position: absolute;
+    bottom: 20px; left: 20px; right: 20px;
+    background: rgba(10, 14, 26, 0.85);
+    backdrop-filter: blur(12px);
+    padding: 20px;
+    border-radius: 16px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .stat-item {
+    text-align: center;
+    color: white;
+  }
+
+  .stat-value {
+    font-size: 20px;
+    font-weight: 800;
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .stat-label {
+    font-size: 12px;
+    opacity: 0.7;
+    margin-top: 4px;
+  }
+
+  /* ===== Sections ===== */
+  section { padding: 100px 0; }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 60px;
+  }
+
+  .section-tag {
+    display: inline-block;
+    padding: 6px 14px;
+    background: var(--bg-alt);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--accent);
+    margin-bottom: 16px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .section-title {
+    font-size: clamp(28px, 4vw, 44px);
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 16px;
+    letter-spacing: -0.5px;
+  }
+
+  .section-subtitle {
+    font-size: 17px;
+    color: var(--text-muted);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  /* ===== Features ===== */
+  .features {
+    background: var(--bg-alt);
+  }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 24px;
+  }
+
+  .feature-card {
+    background: var(--bg-card);
+    padding: 32px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .feature-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--gradient);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+  }
+
+  .feature-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-hover);
+    border-color: transparent;
+  }
+
+  .feature-card:hover::before { transform: scaleX(1); }
+
+  .feature-icon {
+    width: 56px; height: 56px;
+    background: var(--gradient);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 20px var(--accent-glow);
+  }
+
+  .feature-card h3 {
+    font-size: 19px;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+
+  .feature-card p {
+    color: var(--text-muted);
+    font-size: 15px;
+  }
+
+  /* ===== How it works ===== */
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+    position: relative;
+  }
+
+  .step {
+    background: var(--bg-card);
+    padding: 36px 28px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    position: relative;
+    transition: all 0.3s ease;
+  }
+
+  .step:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-hover);
+  }
+
+  .step-number {
+    font-size: 64px;
+    font-weight: 900;
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+    margin-bottom: 16px;
+    opacity: 0.9;
+  }
+
+  .step h3 {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+
+  .step p {
+    color: var(--text-muted);
+    font-size: 15px;
+  }
+
+  /* ===== SPECS SECTION ===== */
+  .specs {
+    background: var(--bg-alt);
+  }
+
+  .specs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+  }
+
+  .spec-card {
+    background: var(--bg-card);
+    padding: 32px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    cursor: help;
+  }
+
+  .spec-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-hover);
+    border-color: var(--accent);
+  }
+
+  .spec-icon {
+    width: 56px; height: 56px;
+    background: var(--bg-alt);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
+  }
+
+  .spec-card:hover .spec-icon {
+    background: var(--gradient);
+    transform: rotate(-5deg) scale(1.1);
+  }
+
+  .spec-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    color: var(--text);
+  }
+
+  .spec-values {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .spec-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 14px;
+    background: var(--bg-alt);
+    border-radius: 10px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+  }
+
+  .spec-label {
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+
+  .spec-val {
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .spec-average {
+    display: none;
+    padding: 12px 14px;
+    background: linear-gradient(135deg, rgba(0, 127, 124, 0.1), rgba(0, 168, 165, 0.1));
+    border: 1px dashed var(--accent);
+    border-radius: 10px;
+    font-size: 14px;
+    margin-top: 8px;
+    animation: fadeIn 0.3s ease;
+  }
+
+  .spec-average .spec-label {
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  .spec-average .spec-val {
+    color: var(--accent);
+  }
+
+  .spec-card:hover .spec-range {
+    opacity: 0.5;
+    filter: blur(1px);
+  }
+
+  .spec-card:hover .spec-average {
+    display: block;
+  }
+
+  .spec-hint {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 16px;
+    text-align: center;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+  }
+
+  .spec-card:hover .spec-hint {
+    opacity: 0;
+  }
+
+  /* ===== Benefits ===== */
+  .benefits {
+    background: var(--bg);
+  }
+
+  .benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+  }
+
+  .benefit-card {
+    background: var(--bg-card);
+    padding: 40px 32px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    text-align: center;
+    transition: all 0.3s ease;
+  }
+
+  .benefit-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-hover);
+  }
+
+  .benefit-icon {
+    font-size: 48px;
+    margin-bottom: 20px;
+    display: inline-block;
+  }
+
+  .benefit-card h3 {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+
+  .benefit-card p {
+    color: var(--text-muted);
+    font-size: 15px;
+  }
+
+  /* ===== Testimonials ===== */
+  .testimonials {
+    background: var(--bg-alt);
+  }
+
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+  }
+
+  .testimonial {
+    background: var(--bg-card);
+    padding: 32px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    transition: all 0.3s ease;
+  }
+
+  .testimonial:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-hover);
+  }
+
+  .testimonial-text {
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--text);
+    margin-bottom: 24px;
+    font-style: italic;
+  }
+
+  .testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .avatar {
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    background: var(--gradient);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 700;
+    font-size: 16px;
+  }
+
+  .author-info h5 {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 2px;
+  }
+
+  .author-info span {
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+
+  /* ===== CASE STUDIES ===== */
+  .cases {
+    background: var(--bg);
+  }
+
+  .cases-list {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  .case-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    overflow: hidden;
+    transition: all 0.4s ease;
+  }
+
+  .case-card:hover {
+    box-shadow: var(--shadow-hover);
+    border-color: var(--accent);
+  }
+
+  .case-header {
+    padding: 32px 36px 24px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .case-number {
+    width: 64px; height: 64px;
+    background: var(--gradient);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    flex-shrink: 0;
+    box-shadow: 0 8px 20px var(--accent-glow);
+  }
+
+  .case-header-text {
+    flex: 1;
+    min-width: 240px;
+  }
+
+  .case-header h3 {
+    font-size: 24px;
+    font-weight: 800;
+    margin-bottom: 8px;
+    line-height: 1.2;
+  }
+
+  .case-tag {
+    display: inline-block;
+    padding: 4px 12px;
+    background: var(--bg-alt);
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .case-body {
+    padding: 32px 36px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+
+  .case-block {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .case-block-title {
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--accent);
+    margin-bottom: 4px;
+  }
+
+  .case-block p {
+    font-size: 15px;
+    color: var(--text);
+    line-height: 1.7;
+  }
+
+  .case-sublist {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .case-sublist li {
+    padding: 14px 16px;
+    background: var(--bg-alt);
+    border-radius: 12px;
+    font-size: 14px;
+    line-height: 1.6;
+    border-left: 3px solid var(--accent);
+  }
+
+  .case-sublist li strong {
+    color: var(--text);
+    font-weight: 700;
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .case-sublist li span {
+    color: var(--text-muted);
+  }
+
+  .case-results {
+    background: linear-gradient(135deg, rgba(0, 127, 124, 0.08), rgba(0, 168, 165, 0.08));
+    border-radius: 16px;
+    padding: 24px;
+  }
+
+  .case-results ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .case-results li {
+    font-size: 14px;
+    color: var(--text);
+    padding-left: 24px;
+    position: relative;
+    line-height: 1.5;
+  }
+
+  .case-results li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: #10b981;
+    font-weight: 700;
+    font-size: 16px;
+  }
+
+  .case-quote {
+    margin: 0 36px 32px;
+    padding: 24px 28px;
+    background: var(--bg-alt);
+    border-left: 4px solid var(--accent);
+    border-radius: 12px;
+    font-style: italic;
+    color: var(--text);
+    line-height: 1.7;
+    position: relative;
+  }
+
+  .case-quote::before {
+    content: '«';
+    position: absolute;
+    top: -8px;
+    left: 16px;
+    font-size: 48px;
+    color: var(--accent);
+    opacity: 0.3;
+    font-family: Georgia, serif;
+  }
+
+  .case-quote-author {
+    display: block;
+    margin-top: 12px;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+
+  /* ===== Team ===== */
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+  }
+
+  .team-card {
+    background: var(--bg-card);
+    padding: 28px 20px;
+    border-radius: 18px;
+    border: 1px solid var(--border);
+    text-align: center;
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+
+  .team-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--accent);
+    box-shadow: var(--shadow-hover);
+  }
+
+  .team-icon {
+    width: 64px; height: 64px;
+    margin: 0 auto 16px;
+    background: var(--bg-alt);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    transition: all 0.3s ease;
+  }
+
+  .team-card:hover .team-icon {
+    background: var(--gradient);
+    transform: rotate(-8deg) scale(1.05);
+  }
+
+  .team-card h4 {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+
+  .team-card p {
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+
+  .team-card .click-hint {
+    font-size: 11px;
+    color: var(--accent);
+    margin-top: 8px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .team-card:hover .click-hint {
+    opacity: 1;
+  }
+
+  /* ===== Modal ===== */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(10, 14, 26, 0.8);
+    backdrop-filter: blur(8px);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    animation: fadeIn 0.3s ease;
+  }
+
+  .modal-overlay.active {
+    display: flex;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .modal {
+    background: var(--bg-card);
+    border-radius: 24px;
+    padding: 40px;
+    max-width: 500px;
+    width: 100%;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    animation: slideUp 0.3s ease;
+    position: relative;
+  }
+
+  @keyframes slideUp {
+    from { transform: translateY(30px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 20px; right: 20px;
+    background: var(--bg-alt);
+    border: none;
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    color: var(--text);
+  }
+
+  .modal-close:hover {
+    background: var(--accent);
+    color: white;
+    transform: rotate(90deg);
+  }
+
+  .modal-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .modal-icon {
+    width: 64px; height: 64px;
+    background: var(--gradient);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    box-shadow: 0 8px 20px var(--accent-glow);
+  }
+
+  .modal-title {
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--text);
+  }
+
+  .modal-subtitle {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-top: 4px;
+  }
+
+  .team-list, .auth-form {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .team-member {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 16px;
+    background: var(--bg-alt);
+    border-radius: 12px;
+    transition: all 0.2s ease;
+  }
+
+  .team-member:hover {
+    background: var(--bg);
+    transform: translateX(4px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .member-avatar {
+    width: 40px; height: 40px;
+    background: var(--gradient);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 700;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+
+  .member-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .member-name {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .member-status {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+
+  .status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+  }
+
+  .status-dot.online {
+    background: #10b981;
+    box-shadow: 0 0 8px rgba(16, 185, 129, 0.5);
+    animation: pulse-status 2s infinite;
+  }
+
+  .status-dot.offline {
+    background: #9ca3af;
+  }
+
+  @keyframes pulse-status {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+  }
+
+  /* ===== Contact Form ===== */
+  .contact {
+    background: var(--bg-alt);
+  }
+
+  .contact-wrapper {
+    background: var(--bg-card);
+    border-radius: 28px;
+    padding: 60px;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .contact-wrapper h2 {
+    font-size: 32px;
+    font-weight: 800;
+    margin-bottom: 12px;
+    text-align: center;
+  }
+
+  .contact-wrapper > p {
+    text-align: center;
+    color: var(--text-muted);
+    margin-bottom: 36px;
+  }
+
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .form-group.full { grid-column: 1 / -1; }
+
+  .form-group label {
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: var(--text-muted);
+  }
+
+  .form-group input {
+    padding: 14px 16px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    font-size: 15px;
+    color: var(--text);
+    transition: all 0.2s ease;
+    font-family: inherit;
+  }
+
+  .form-group input:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 4px var(--accent-glow);
+  }
+
+  .form-submit {
+    width: 100%;
+    padding: 16px;
+    background: var(--gradient);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 8px;
+    box-shadow: 0 8px 24px var(--accent-glow);
+  }
+
+  .form-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px var(--accent-glow);
+  }
+
+  .form-note {
+    text-align: center;
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-top: 20px;
+  }
+
+  .auth-prompt {
+    text-align: center;
+    padding: 40px 20px;
+  }
+
+  .auth-prompt p {
+    font-size: 16px;
+    color: var(--text);
+    margin-bottom: 24px;
+  }
+
+  .auth-buttons {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .user-greeting {
+    text-align: center;
+    color: var(--accent);
+    margin-bottom: 24px;
+    font-weight: 600;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .logout-btn {
+    background: transparent;
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .logout-btn:hover {
+    border-color: #ef4444;
+    color: #ef4444;
+  }
+
+  .switch-auth {
+    text-align: center;
+    margin-top: 16px;
+    font-size: 14px;
+    color: var(--text-muted);
+  }
+
+  .switch-auth a {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .switch-auth a:hover {
+    text-decoration: underline;
+  }
+
+  /* ===== Footer ===== */
+  footer {
+    background: var(--bg-alt);
+    padding: 60px 0 30px;
+    border-top: 1px solid var(--border);
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr;
+    gap: 40px;
+    margin-bottom: 40px;
+  }
+
+  .footer-brand .logo-svg {
+    height: 50px;
+    margin-bottom: 12px;
+  }
+
+  .footer-brand h3 {
+    font-size: 22px;
+    font-weight: 800;
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 12px;
+  }
+
+  .footer-brand p {
+    color: var(--text-muted);
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
+
+  .contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .contact-info div {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    color: var(--text);
+  }
+
+  .contact-info span:first-child {
+    font-size: 18px;
+  }
+
+  .contact-info a {
+    color: var(--text);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .contact-info a:hover {
+    color: var(--accent);
+  }
+
+  .footer-col h5 {
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 16px;
+    color: var(--text);
+  }
+
+  .footer-col ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .footer-col a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.2s ease;
+  }
+
+  .footer-col a:hover { color: var(--accent); }
+
+  .footer-bottom {
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+    color: var(--text-muted);
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  /* ===== Responsive ===== */
+  @media (max-width: 900px) {
+    .hero-grid { grid-template-columns: 1fr; gap: 40px; }
+    .footer-grid { grid-template-columns: 1fr; }
+    .form-grid { grid-template-columns: 1fr; }
+    .contact-wrapper { padding: 40px 24px; }
+    .hero-slogan { font-size: 18px; }
+    .case-body { grid-template-columns: 1fr; }
+    .case-header, .case-body, .case-quote { padding-left: 24px; padding-right: 24px; }
+    .case-quote { margin-left: 24px; margin-right: 24px; }
+  }
+
+  @media (max-width: 700px) {
+    .nav-links { display: none; }
+    .burger { display: block; }
+    .nav-links.open {
+      display: flex;
+      position: absolute;
+      top: 100%; left: 0; right: 0;
+      flex-direction: column;
+      background: var(--bg);
+      padding: 24px;
+      border-bottom: 1px solid var(--border);
+      gap: 20px;
+    }
+    section { padding: 70px 0; }
+    .hero { padding: 120px 0 60px; }
+    .logo-text { display: none; }
+    .modal { padding: 30px 20px; }
+    .hero-slogan { font-size: 16px; }
+    .case-header h3 { font-size: 20px; }
+  }
+
+  /* ===== Animations ===== */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <nav class="nav">
+      <a href="#" class="logo">
+        <svg class="logo-svg" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M40 30 L130 30 L130 50 L70 50 L70 85 L130 85 L130 105 L70 105 L70 170 L50 170 L50 30 Z" fill="#1a1f2e"/>
+          <path d="M70 115 L130 115 L130 135 L90 135 L70 155 L70 115 Z" fill="#1a1f2e"/>
+          <path d="M65 145 L95 115 L115 130 L135 110 L150 125 L150 145 L65 145 Z" fill="#007f7c"/>
+        </svg>
+        <span class="logo-text">БЕНЕТОИТ М1</span>
+      </a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#features">Особенности</a></li>
+        <li><a href="#how-it-works">Как работает</a></li>
+        <li><a href="#specs">Характеристики</a></li>
+        <li><a href="#cases">Миссии</a></li>
+        <li><a href="#benefits">Выгоды</a></li>
+        <li><a href="#team">Команда</a></li>
+        <li><a href="#contact">Контакты</a></li>
+      </ul>
+      <div style="display:flex;gap:12px;align-items:center;">
+        <button class="theme-toggle" id="themeToggle" aria-label="Сменить тему"></button>
+        <button class="burger" id="burger" aria-label="Меню"></button>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div class="hero-content">
+        <div class="hero-badge">Строительство будущего уже здесь</div>
+        <h1>Робот-помощник <span class="gradient">БЕНЕТОИТ М1</span> — точность, скорость и безопасность</h1>
+        
+        <div class="hero-slogan">
+          Мы переносим человека из опасной зоны в безопасную, доверяя работу интеллектуальной робототехнике.
+        </div>
+        
+        <p class="hero-description">
+          «Бенетоит М1» — это интеллектуальный роботизированный комплекс, предназначенный для выполнения точных работ в опасных и труднодоступных условиях, где присутствует риск для жизни человека. Наша цель — заменить человека в зоне повышенной опасности, сохранив высокую точность и эффективность.
+        </p>
+        
+        <div class="hero-buttons">
+          <a href="#contact" class="btn btn-primary">Записаться на тест-драйв →</a>
+          <a href="#features" class="btn btn-secondary">Узнать больше</a>
+        </div>
+      </div>
+      <div class="hero-image">
+        <img src="robot-image.jpg" alt="БЕНЕТОИТ М1">
+        <div class="hero-stats">
+          <div class="stat-item">
+            <div class="stat-value">±0.5мм</div>
+            <div class="stat-label">Точность</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value">3x</div>
+            <div class="stat-label">Скорость</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value">12ч</div>
+            <div class="stat-label">Автономность</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Features -->
+<section class="features" id="features">
+  <div class="container">
+    <div class="section-header fade-in">
+      <div class="section-tag">В чём фишка?</div>
+      <h2 class="section-title">Технологии, которые меняют представление о строительстве</h2>
+      <p class="section-subtitle">Передовые решения для профессионалов строительной отрасли</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card fade-in">
+        <div class="feature-icon">🎯</div>
+        <h3>Лазерная точность</h3>
+        <p>Система LiDAR и AI-коррекция обеспечивают идеальную геометрию с отклонением не более 0.5 мм</p>
+      </div>
+      <div class="feature-card fade-in">
+        <div class="feature-icon">⚡</div>
+        <h3>Скорость x3</h3>
+        <p>Работает в 3 раза быстрее бригады из 5 человек. Не устает, не ошибается, не берет перерывы</p>
+      </div>
+      <div class="feature-card fade-in">
+        <div class="feature-icon">🛡️</div>
+        <h3>Безопасность</h3>
+        <p>Мультисенсорная защита, автоматическая остановка при обнаружении препятствий. Сертифицировано ISO</p>
+      </div>
+      <div class="feature-card fade-in">
+        <div class="feature-icon">📱</div>
+        <h3>Умное управление</h3>
+        <p>Управляйте роботом со смартфона. Отслеживайте процесс в реальном времени через приложение</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- How it works -->
+<section id="how-it-works">
+  <div class="container">
+    <div class="section-header fade-in">
+      <div class="section-tag">Как это работает</div>
+      <h2 class="section-title">Три простых шага до идеального результата</h2>
+    </div>
+    <div class="steps">
+      <div class="step fade-in">
+        <div class="step-number">1</div>
+        <h3>Сканирование</h3>
+        <p>Робот создает 3D-модель помещения за 15 минут. Анализирует поверхность, рассчитывает расход материалов</p>
+      </div>
+      <div class="step fade-in">
+        <div class="step-number">2</div>
+        <h3>Автономная работа</h3>
+        <p>Запускаете процесс и занимаетесь своими делами. Робот штукатурит, красит или укладывает плитку</p>
+      </div>
+      <div class="step fade-in">
+        <div class="step-number">3</div>
+        <h3>Готовый результат</h3>
+        <p>Получаете уведомление о завершении. Поверхность идеально ровная, готова к финишной отделке</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Specs -->
+<section class="specs" id="specs">
+  <div class="container">
+    <div class="section-header fade-in">
+      <div class="section-tag">Характеристики</div>
+      <h2 class="section-title">Технические параметры БЕНЕТОИТ М1</h2>
+      <p class="section-subtitle">Наведите на карточку, чтобы увидеть рекомендуемые средние значения</p>
+    </div>
+    <div class="specs-grid">
+      <div class="spec-card fade-in">
+        <div class="spec-icon">🎯</div>
+        <div class="spec-title">Точность позиционирования</div>
+        <div class="spec-values">
+          <div class="spec-row spec-range">
+            <span class="spec-label">Минимум</span>
+            <span class="spec-val">±2.0 мм</span>
+          </div>
+          <div class="spec-row spec-range">
+            <span class="spec-label">Максимум</span>
+            <span class="spec-val">±0.1 мм</span>
+          </div>
+          <div class="spec-average">
+            <div class="spec-row" style="background:transparent;padding:0;">
+              <span class="spec-label">Среднее (Рекомендуемое)</span>
+              <span class="spec-val">±0.5 мм</span>
+            </div>
+          </div>
+        </div>
+        <div class="spec-hint">Наведите для средних значений</div>
+      </div>
+
+      <div class="spec-card fade-in">
+        <div class="spec-icon">⚡</div>
+        <div class="spec-title">Производительность</div>
+        <div class="spec-values">
+          <div class="spec-row spec-range">
+            <span class="spec-label">Минимум</span>
+            <span class="spec-val">15 м²/ч</span>
+          </div>
+          <div class="spec-row spec-range">
+            <span class="spec-label">Максимум</span>
+            <span class="spec-val">45 м²/ч</span>
+          </div>
+          <div class="spec-average">
+            <div class="spec-row" style="background:transparent;padding:0;">
+              <span class="spec-label">Среднее (Рекомендуемое)</span>
+              <span class="spec-val">30 м²/ч</span>
+            </div>
+          </div>
+        </div>
+        <div class="spec-hint">Наведите для средних значений</div>
+      </div>
+
+      <div class="spec-card fade-in">
+        <div class="spec-icon">🔋</div>
+        <div class="spec-title">Автономность работы</div>
+        <div class="spec-values">
+          <div class="spec-row spec-range">
+            <span class="spec-label">Минимум</span>
+            <span class="spec-val">6 часов</span>
+          </div>
+          <div class="spec-row spec-range">
+            <span class="spec-label">Максимум</span>
+            <span class="spec-val">18 часов</span>
+          </div>
+          <div class="spec-average">
+            <div class="spec-row" style="background:transparent;padding:0;">
+              <span class="spec-label">Среднее (Рекомендуемое)</span>
+              <span class="spec-val">12 часов</span>
+            </div>
+          </div>
+        </div>
+        <div class="spec-hint">Наведите для средних значений</div>
+      </div>
+
+      <div class="spec-card fade-in">
+        <div class="spec-icon">🌡️</div>
+        <div class="spec-title">Рабочая температура</div>
+        <div class="spec-values">
+          <div class="spec-row spec-range">
+            <span class="spec-label">Минимум</span>
+            <span class="spec-val">-30°C</span>
+          </div>
+          <div class="spec-row spec-range">
+            <span class="spec-label">Максимум</span>
+            <span class="spec-val">+10°C</span>
+          </div>
+          <div class="spec-average">
+            <div class="spec-row" style="background:transparent;padding:0;">
+              <span class="spec-label">Среднее (Рекомендуемое)</span>
+              <span class="spec-val">-10°C</span>
+            </div>
+          </div>
+        </div>
+        <div class="spec-hint">Наведите для средних значений</div>
+      </div>
+
+      <div class="spec-card fade-in">
+        <div class="spec-icon">🛡️</div>
+        <div class="spec-title">Несчастные случаи</div>
+        <div class="spec-values">
+          <div class="spec-row spec-range">
+            <span class="spec-label">Минимум</span>
+            <span class="spec-val">0</span>
+          </div>
+          <div class="spec-row spec-range">
+            <span class="spec-label">Максимум</span>
+            <span class="spec-val">0</span>
+          </div>
+          <div class="spec-average">
+            <div class="spec-row" style="background:transparent;padding:0;">
+              <span class="spec-label">Среднее (Рекомендуемое)</span>
+              <span class="spec-val">0</span>
+            </div>
+          </div>
+        </div>
+        <div class="spec-hint">Наведите для средних значений</div>
+      </div>
+
+      <div class="spec-card fade-in">
+        <div class="spec-icon">⛏️</div>
+        <div class="spec-title">Количество шахт</div>
+        <div class="spec-values">
+          <div class="spec-row spec-range">
+            <span class="spec-label">Минимум</span>
+            <span class="spec-val">3</span>
+          </div>
+          <div class="spec-row spec-range">
+            <span class="spec-label">Максимум</span>
+            <span class="spec-val">15</span>
+          </div>
+          <div class="spec-average">
+            <div class="spec-row" style="background:transparent;padding:0;">
+              <span class="spec-label">Среднее (Рекомендуемое)</span>
+              <span class="spec-val">9</span>
+            </div>
+          </div>
+        </div>
+        <div class="spec-hint">Наведите для средних значений</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CASE STUDIES -->
+<section class="cases" id="cases">
+  <div class="container">
+    <div class="section-header fade-in">
+      <div class="section-tag">Реальные миссии</div>
+      <h2 class="section-title">БЕНЕТОИТ М1 в экстремальных условиях</h2>
+      <p class="section-subtitle">Три случая, когда робот выполнил задачу там, где человек работать не мог</p>
+    </div>
+    <div class="cases-list">
+
+      <!-- КЕЙС 1: -58°C -->
+      <article class="case-card fade-in">
+        <div class="case-header">
+          <div class="case-number">❄️</div>
+          <div class="case-header-text">
+            <span class="case-tag">Автономная миссия • -58°C</span>
+            <h3>Операция «Арктический сознание»</h3>
+          </div>
+        </div>
+        <div class="case-body">
+          <div class="case-block">
+            <div class="case-block-title">Ситуация</div>
+            <p>Выработка заблокирована ледяным монолитом. Температура за бортом -58°C. Связь с поверхностью отсутствует. Присутствие человека невозможно — техника превращается в кусок металла.</p>
+            
+            <div class="case-block-title" style="margin-top:16px;">Решение</div>
+            <ul class="case-sublist">
+              <li>
+                <strong>🌡️ Термостабильность</strong>
+                <span>Система активного охлаждения перепрофилирована в подогрев: жидкостный контур поддерживал +25°C внутри корпуса при -58°C снаружи</span>
+              </li>
+              <li>
+                <strong>🧭 Автономная навигация</strong>
+                <span>Без GPS и связи — по предзагруженной 3D-карте и данным LiDAR. ИИ корректировал маршрут в реальном времени</span>
+              </li>
+              <li>
+                <strong>🔩 Адаптивное бурение</strong>
+                <span>Нагревательные элементы бура растопили лед в точке контакта, предотвратив скольжение и обеспечив точное позиционирование</span>
+              </li>
+              <li>
+                <strong>📊 Сбор данных</strong>
+                <span>За миссию собрано 120 ГБ данных: тепловые карты стен, видео крепи, показания газоанализаторов</span>
+              </li>
+            </ul>
+          </div>
+          <div class="case-block">
+            <div class="case-block-title">Результат</div>
+            <div class="case-results">
+              <ul>
+                <li>Разведка и расчистка выполнены за 4 часа без единого участия человека</li>
+                <li>Оборудование стоимостью 40 млн рублей сохранено и эвакуировано</li>
+                <li>Целостность свода подтверждена — вторичных обвалов не произошло</li>
+                <li>Полученные данные позволили спроектировать систему обогрева против повторных аварий</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <blockquote class="case-quote">
+          Бенетоит М1 доказал, что может работать там, где даже наша самая надежная техника превращается в кусок металла. Он не просто выжил в -58°C — он выполнил сложнейшую задачу с точностью, которой не достигнет ни один оператор в таких условиях. Это не замена человеку, это расширение границ возможного.
+          <span class="case-quote-author">— Начальник участка</span>
+        </blockquote>
+      </article>
+
+      <!-- КЕЙС 2: ОПЕРАЦИЯ ГЛУБИНА -->
+      <article class="case-card fade-in">
+        <div class="case-header">
+          <div class="case-number">🔥</div>
+          <div class="case-header-text">
+            <span class="case-tag">Спасательная операция • 800 м глубины</span>
+            <h3>Операция «Глубина»</h3>
+          </div>
+        </div>
+        <div class="case-body">
+          <div class="case-block">
+            <div class="case-block-title">Ситуация</div>
+            <p>На глубине 800 метров в угольном разрезе произошел внезапный обвал породы. Проход заблокирован массивом скальной породы и металлическими конструкциями крепи. Температура в тупике поднялась до +55°C из-за повреждения вентиляции. Присутствие спасателей смертельно опасно из-за риска вторичного обрушения. Обычная техника не могла пройти из-за узости выработки и нестабильности грунта.</p>
+          </div>
+          <div class="case-block">
+            <div class="case-block-title">Решение</div>
+            <ul class="case-sublist">
+              <li>
+                <strong>🔍 Разведка</strong>
+                <span>Робот вошел в зону автономно. ИИ за 3 минуты построил 3D-карту завала и выявил пустоты, где могли находиться люди</span>
+              </li>
+              <li>
+                <strong>🔧 Пробивка пути</strong>
+                <span>Гидравлический бур разрушил монолитный камень точечными ударами, не создавая вибрации, опасной для свода</span>
+              </li>
+              <li>
+                <strong>🪣 Расчистка</strong>
+                <span>Ковш аккуратно убрал щебень в миллиметрах от газовых труб. ИИ контролировал угол наклона, предотвращая искры</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="case-body" style="padding-top:0;">
+          <div class="case-block" style="grid-column: 1 / -1;">
+            <div class="case-block-title">Результат</div>
+            <div class="case-results">
+              <ul>
+                <li>Проход восстановлен за 4 часа вместо прогнозируемых 2 суток</li>
+                <li>Риск для персонала — 0%</li>
+                <li>Точность работ позволила сохранить целостность коммуникаций</li>
+                <li>Смена спасена, оборудование не пострадало</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <blockquote class="case-quote">
+          Когда технологии берут риск на себя, человек возвращается домой.
+          <span class="case-quote-author">— Вердикт операции «Глубина»</span>
+        </blockquote>
+      </article>
+
+      <!-- КЕЙС 3: ОПЕРАЦИЯ ХИРУРГ -->
+      <article class="case-card fade-in">
+        <div class="case-header">
+          <div class="case-number">💉</div>
+          <div class="case-header-text">
+            <span class="case-tag">Телеприсутствие с ИИ • Золоторудный разрез, -450 м</span>
+            <h3>Операция «Хирург». Точечная расчистка в зоне критического обрушения</h3>
+          </div>
+        </div>
+        <div class="case-body">
+          <div class="case-block">
+            <div class="case-block-title">Ситуация</div>
+            <p>После планового взрыва произошел непредвиденный обвал свода выработки. Массив породы около 30 тонн перекрыл проход шириной всего 2,8 метра. Внутри оставались 3 сотрудника.</p>
+            <p><strong>Условия:</strong> нестабильный грунт, высокая вероятность вторичного обвала, температура +12°C, влажность 98%, риск затопления, задымление после взрывных работ.</p>
+            <p><strong>Задача:</strong> обеспечить безопасный проход к заблокированному участку для эвакуации персонала и восстановления вентиляции, не спровоцировав новый обвал. Время на спасение ограничено: через 4 часа начинался подъем грунтовых вод.</p>
+            
+            <div class="case-block-title" style="margin-top:16px;">Почему стандартная техника бесполезна</div>
+            <ul class="case-sublist">
+              <li>
+                <strong>🚫 Экскаваторы</strong>
+                <span>Не могли маневрировать в узком пространстве без риска задеть неустойчивые стены</span>
+              </li>
+              <li>
+                <strong>🚫 Ручная расчистка</strong>
+                <span>Запрещена из-за показаний датчиков нестабильности грунта</span>
+              </li>
+            </ul>
+          </div>
+          <div class="case-block">
+            <div class="case-block-title">Решение: режим «Телеприсутствие с ИИ-ассистентом»</div>
+            <p>Робот был доставлен к месту ЧП за 40 минут. Оператор, находящийся в безопасной зоне на поверхности, подключился к системе управления через защищенный канал связи.</p>
+            <ul class="case-sublist">
+              <li>
+                <strong>⚠️ Оценка рисков в реальном времени</strong>
+                <span>ИИ за 90 секунд проанализировал данные LiDAR, сейсмодатчиков и камер. Система выделила красным цветом зоны, где любое механическое воздействие могло вызвать обвал. Был построен оптимальный маршрут</span>
+              </li>
+              <li>
+                <strong>🔩 Бурение как инструмент стабилизации</strong>
+                <span>Вместо того чтобы сразу копать, робот просверлил 6 отверстий диаметром 15 см в ключевых точках завала и установил временные анкеры. Это позволило «сшить» неустойчивый массив и предотвратить смещение породы</span>
+              </li>
+              <li>
+                <strong>🪣 Ювелирная работа ковшом</strong>
+                <span>Послойная расчистка с контролем усилия: при приближении к металлическим конструкциям крепи система автоматически снижала мощность, чтобы избежать искр (риск взрыва метана). Точность до 2 см, не задевая газовые трубы и кабели связи</span>
+              </li>
+              <li>
+                <strong>🌊 Адаптация к изменяющимся условиям</strong>
+                <span>Когда уровень воды начал расти, ИИ пересчитал маршрут в реальном времени, выбрав более высокую траекторию. Робот самостоятельно скорректировал угол наклона корпуса на мокром, скользком грунте</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="case-body" style="padding-top:0;">
+          <div class="case-block" style="grid-column: 1 / -1;">
+            <div class="case-block-title">Результат</div>
+            <div class="case-results">
+              <ul>
+                <li>Проход восстановлен за 3 часа 20 минут (вместо прогнозных 8–10 часов ручной расчистки)</li>
+                <li>Все 3 сотрудника эвакуированы без травм</li>
+                <li>Целостность коммуникаций сохранена на 100%</li>
+                <li>Вторичных обвалов не зафиксировано</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <blockquote class="case-quote">
+          Бенетоит М1 сделал то, что мы считали невозможным. Он не просто убрал завал — он стабилизировал его, пока работал. Это не техника, это партнер, который думает на три шага вперед. В следующий раз мы даже не будем рассматривать вариант с людьми в такой зоне.
+          <span class="case-quote-author">— Главный инженер разреза</span>
+        </blockquote>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- Benefits -->
+<section class="benefits" id="benefits">
+  <div class="container">
+    <div class="section-header fade-in">
+      <div class="section-tag">Ваши выгоды</div>
+      <h2 class="section-title">Почему БЕНЕТОИТ М1 — это выгодная инвестиция</h2>
+    </div>
+    <div class="benefits-grid">
+      <div class="benefit-card fade-in">
+        <div class="benefit-icon">⏱️</div>
+        <h3>Экономия времени</h3>
+        <p>Сокращение сроков ремонта на 70%. Объект сдается на 2-3 недели раньше. Никаких срывов дедлайнов</p>
+      </div>
+      <div class="benefit-card fade-in">
+        <div class="benefit-icon">💰</div>
+        <h3>Экономия денег</h3>
+        <p>Замена бригады из 5 человек. Экономия на зарплатах до 300 000₽ в месяц. Окупаемость за 3 месяца</p>
+      </div>
+      <div class="benefit-card fade-in">
+        <div class="benefit-icon">😊</div>
+        <h3>Комфорт и спокойствие</h3>
+        <p>Никакого шума, пыли и суеты. Робот работает тихо и чисто. Вы контролируете процесс удаленно</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials -->
+<section class="testimonials">
+  <div class="container">
+    <div class="section-header fade-in">
+      <div class="section-tag">Отзывы клиентов</div>
+      <h2 class="section-title">Что говорят корпоративные партнеры</h2>
+    </div>
+    <div class="testimonials-grid">
+      <div class="testimonial fade-in">
+        <p class="testimonial-text">"Используем БЕНЕТОИТ М1 для укрепления и отделки подземных выработок. Робот справляется с задачами в сложных условиях, где людям работать опасно. Скорость и точность превзошли все ожидания."</p>
+        <div class="testimonial-author">
+          <div class="avatar">ГР</div>
+          <div class="author-info">
+            <h5>АО "Северная Руда"</h5>
+            <span>Горнодобывающая компания</span>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial fade-in">
+        <p class="testimonial-text">"Внедрили робота на трех крупных объектах одновременно. Сроки сдачи жилых комплексов сократились на 25%. БЕНЕТОИТ М1 полностью оправдал инвестиции и стал нашим стандартом качества."</p>
+        <div class="testimonial-author">
+          <div class="avatar">СК</div>
+          <div class="author-info">
+            <h5>ГК "Монолит"</h5>
+            <span>Строительная компания</span>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial fade-in">
+        <p class="testimonial-text">"Применяем устройство для быстрого восстановления поверхностей после аварийных ситуаций. Мобильность, автономность и работа без масштабной бригады делают его незаменимым инструментом."</p>
+        <div class="testimonial-author">
+          <div class="avatar">СС</div>
+          <div class="author-info">
+            <h5>АТС "Щит"</h5>
+            <span>Специальная аварийно-техническая служба</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Team -->
+<section id="team">
+  <div class="container">
+    <div class="section-header fade-in">
+      <div class="section-tag">Наша команда</div>
+      <h2 class="section-title">Эксперты, которые создают будущее строительства</h2>
+    </div>
+    <div class="team-grid">
+      <div class="team-card fade-in" data-team="project">
+        <div class="team-icon">👔</div>
+        <h4>Проектный менеджмент</h4>
+        <p>Координация внедрения и поддержка клиентов 24/7</p>
+        <div class="click-hint">Нажмите, чтобы увидеть команду →</div>
+      </div>
+      <div class="team-card fade-in" data-team="engineering">
+        <div class="team-icon">⚙️</div>
+        <h4>Инжиниринг</h4>
+        <p>Разработка механики и систем управления</p>
+        <div class="click-hint">Нажмите, чтобы увидеть команду →</div>
+      </div>
+      <div class="team-card fade-in" data-team="additive">
+        <div class="team-icon">🖨️</div>
+        <h4>Аддитивные технологии</h4>
+        <p>3D-печать компонентов и прототипирование</p>
+        <div class="click-hint">Нажмите, чтобы увидеть команду →</div>
+      </div>
+      <div class="team-card fade-in" data-team="brand">
+        <div class="team-icon">📢</div>
+        <h4>Бренд-менеджмент</h4>
+        <p>Развитие продукта и маркетинг</p>
+        <div class="click-hint">Нажмите, чтобы увидеть команду →</div>
+      </div>
+      <div class="team-card fade-in" data-team="it">
+        <div class="team-icon">💻</div>
+        <h4>IT</h4>
+        <p>Искусственный интеллект и программное обеспечение</p>
+        <div class="click-hint">Нажмите, чтобы увидеть команду →</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Modals -->
+<div class="modal-overlay" id="teamModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('teamModal')">✕</button>
+    <div class="modal-header">
+      <div class="modal-icon" id="modalIcon"></div>
+      <div>
+        <div class="modal-title" id="modalTitle"></div>
+        <div class="modal-subtitle">Состав команды</div>
+      </div>
+    </div>
+    <ul class="team-list" id="teamList"></ul>
+  </div>
+</div>
+
+<!-- Login Modal -->
+<div class="modal-overlay" id="loginModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('loginModal')">✕</button>
+    <div class="modal-header">
+      <div class="modal-icon">🔑</div>
+      <div>
+        <div class="modal-title">Вход в аккаунт</div>
+        <div class="modal-subtitle">Введите свои данные для доступа к форме</div>
+      </div>
+    </div>
+    <form class="auth-form" id="loginForm">
+      <div class="form-group">
+        <label>Ваше имя</label>
+        <input type="text" id="loginName" required placeholder="Иван Иванов">
+      </div>
+      <div class="form-group">
+        <label>Телефон или Email</label>
+        <input type="text" required placeholder="+7 (___) ___-__-__">
+      </div>
+      <button type="submit" class="form-submit">Войти</button>
+    </form>
+    <div class="switch-auth">
+      Нет аккаунта? <a onclick="switchModal('loginModal', 'registerModal')">Зарегистрироваться</a>
+    </div>
+  </div>
+</div>
+
+<!-- Register Modal -->
+<div class="modal-overlay" id="registerModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('registerModal')">✕</button>
+    <div class="modal-header">
+      <div class="modal-icon">📝</div>
+      <div>
+        <div class="modal-title">Регистрация</div>
+        <div class="modal-subtitle">Создайте аккаунт для отправки заявки</div>
+      </div>
+    </div>
+    <form class="auth-form" id="registerForm">
+      <div class="form-group">
+        <label>Ваше имя</label>
+        <input type="text" id="registerName" required placeholder="Иван Иванов">
+      </div>
+      <div class="form-group">
+        <label>Телефон или Email</label>
+        <input type="text" required placeholder="+7 (___) ___-__-__">
+      </div>
+      <div class="form-group">
+        <label>Придумайте пароль</label>
+        <input type="password" required placeholder="••••••••">
+      </div>
+      <button type="submit" class="form-submit">Зарегистрироваться</button>
+    </form>
+    <div class="switch-auth">
+      Уже есть аккаунт? <a onclick="switchModal('registerModal', 'loginModal')">Войти</a>
+    </div>
+  </div>
+</div>
+
+<!-- Contact -->
+<section class="contact" id="contact">
+  <div class="container">
+    <div class="contact-wrapper fade-in">
+      <h2>Запишитесь на тест-драйв</h2>
+      <p>Оставьте заявку — мы перезвоним в течение часа</p>
+      
+      <div id="authRequired" class="auth-prompt" style="display: none;">
+        <p>Для отправки заявки необходимо <strong>войти</strong> или <strong>зарегистрироваться</strong></p>
+        <div class="auth-buttons">
+          <button class="btn btn-primary" onclick="openModal('loginModal')">Войти в аккаунт</button>
+          <button class="btn btn-secondary" onclick="openModal('registerModal')">Зарегистрироваться</button>
+        </div>
+      </div>
+
+      <div id="contactFormContainer" style="display: none;">
+        <div class="user-greeting">
+          <span>👤</span>
+          <span id="userGreetingText">Вы вошли как: Пользователь</span>
+          <button class="logout-btn" onclick="logout()">Выйти</button>
+        </div>
+        <form id="contactForm">
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="name">Ваше имя</label>
+              <input type="text" id="name" name="name" required placeholder="Иван Иванов">
+            </div>
+            <div class="form-group">
+              <label for="phone">Телефон</label>
+              <input type="tel" id="phone" name="phone" required placeholder="+7 (___) ___-__-__">
+            </div>
+            <div class="form-group full">
+              <label for="city">Город</label>
+              <input type="text" id="city" name="city" required placeholder="Москва">
+            </div>
+          </div>
+          <button type="submit" class="form-submit">Получить консультацию</button>
+        </form>
+      </div>
+
+      <p class="form-note">Готовы начать? Заполните форму, и наш менеджер свяжется с вами для согласования даты и времени тест-драйва. Демонстрация бесплатна и ни к чему не обязывает.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <svg class="logo-svg" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M40 30 L130 30 L130 50 L70 50 L70 85 L130 85 L130 105 L70 105 L70 170 L50 170 L50 30 Z" fill="#1a1f2e"/>
+          <path d="M70 115 L130 115 L130 135 L90 135 L70 155 L70 115 Z" fill="#1a1f2e"/>
+          <path d="M65 145 L95 115 L115 130 L135 110 L150 125 L150 145 L65 145 Z" fill="#007f7c"/>
+        </svg>
+        <h3>БЕНЕТОИТ М1</h3>
+        <p>Роботы для строительства будущего. Точность, скорость и безопасность в каждом проекте.</p>
+        <div class="contact-info">
+          <div><span>📞</span><span>8 (911) 388-31-80</span></div>
+          <div><span>✉️</span><a href="mailto:sabanovkirill787@gmail.com">sabanovkirill787@gmail.com</a></div>
+          <div><span>💬</span><a href="https://vk.me/join/3RYkHtnI4e6x7zBd2f7FWzjXIzeh_UMWYxQ=" target="_blank">Написать в VK</a></div>
+          <div><span>📍</span><span>Москва, ул. Инновационная, 42</span></div>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h5>Навигация</h5>
+        <ul>
+          <li><a href="#features">Особенности</a></li>
+          <li><a href="#how-it-works">Как работает</a></li>
+          <li><a href="#specs">Характеристики</a></li>
+          <li><a href="#cases">Миссии</a></li>
+          <li><a href="#benefits">Выгоды</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Компания</h5>
+        <ul>
+          <li><a href="#team">Команда</a></li>
+          <li><a href="#contact">Контакты</a></li>
+          <li><a href="#">Политика конфиденциальности</a></li>
+          <li><a href="#">Условия использования</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2026 БЕНЕТОИТ М1. Все права защищены.</div>
+      <div>Строим будущее вместе</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Theme toggle
+  const themeToggle = document.getElementById('themeToggle');
+  const savedTheme = localStorage.getItem('theme') || 'light';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  themeToggle.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+
+  themeToggle.addEventListener('click', () => {
+    const current = document.documentElement.getAttribute('data-theme');
+    const next = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+    themeToggle.textContent = next === 'dark' ? '☀️' : '🌙';
+  });
+
+  // Mobile menu
+  const burger = document.getElementById('burger');
+  const navLinks = document.getElementById('navLinks');
+  burger.addEventListener('click', () => navLinks.classList.toggle('open'));
+  navLinks.querySelectorAll('a').forEach(a =>
+    a.addEventListener('click', () => navLinks.classList.remove('open'))
+  );
+
+  // Scroll animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  // ===== AUTHENTICATION LOGIC =====
+  function checkAuth() {
+    const user = localStorage.getItem('benetonit_user');
+    const authRequired = document.getElementById('authRequired');
+    const formContainer = document.getElementById('contactFormContainer');
+    const greetingText = document.getElementById('userGreetingText');
+    const nameInput = document.getElementById('name');
+
+    if (user) {
+      authRequired.style.display = 'none';
+      formContainer.style.display = 'block';
+      greetingText.textContent = `Вы вошли как: ${user}`;
+      nameInput.value = user;
+    } else {
+      authRequired.style.display = 'block';
+      formContainer.style.display = 'none';
+    }
+  }
+
+  function openModal(modalId) {
+    document.getElementById(modalId).classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal(modalId) {
+    document.getElementById(modalId).classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  function switchModal(closeId, openId) {
+    closeModal(closeId);
+    setTimeout(() => openModal(openId), 200);
+  }
+
+  document.getElementById('loginForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const name = document.getElementById('loginName').value.trim();
+    if (name) {
+      localStorage.setItem('benetonit_user', name);
+      closeModal('loginModal');
+      checkAuth();
+      document.getElementById('loginForm').reset();
+    }
+  });
+
+  document.getElementById('registerForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const name = document.getElementById('registerName').value.trim();
+    if (name) {
+      localStorage.setItem('benetonit_user', name);
+      closeModal('registerModal');
+      checkAuth();
+      document.getElementById('registerForm').reset();
+    }
+  });
+
+  function logout() {
+    localStorage.removeItem('benetonit_user');
+    checkAuth();
+  }
+
+  document.querySelectorAll('.modal-overlay').forEach(overlay => {
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) {
+        overlay.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    });
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.modal-overlay.active').forEach(modal => {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+      });
+    }
+  });
+
+  // Team modal logic
+  const teamData = {
+    project: {
+      icon: '👔',
+      title: 'Проектный менеджмент',
+      members: [
+        { name: 'Рудакова Анастасия', status: 'online' },
+        { name: 'Яковлева Людмила', status: 'offline' },
+        { name: 'Шалыгин Василий', status: 'online' }
+      ]
+    },
+    engineering: {
+      icon: '⚙️',
+      title: 'Инжиниринг',
+      members: [
+        { name: 'Иванов Вадим', status: 'online' },
+        { name: 'Дарья Родина', status: 'online' },
+        { name: 'Флавьянов Алексей', status: 'offline' }
+      ]
+    },
+    additive: {
+      icon: '🖨️',
+      title: 'Аддитивные технологии',
+      members: [
+        { name: 'Андреев Александр', status: 'offline' },
+        { name: 'Сироткин Дмитрий', status: 'online' },
+        { name: 'Максимова Мария', status: 'online' },
+        { name: 'Буханцева Варвара', status: 'offline' }
+      ]
+    },
+    brand: {
+      icon: '📢',
+      title: 'Бренд-менеджмент',
+      members: [
+        { name: 'Кузнецова Екатерина', status: 'online' },
+        { name: 'Зайцев Николай', status: 'offline' },
+        { name: 'Иванов Илья', status: 'online' }
+      ]
+    },
+    it: {
+      icon: '💻',
+      title: 'IT',
+      members: [
+        { name: 'Морозов Андрей', status: 'online' },
+        { name: 'Колесников Сергей', status: 'online' },
+        { name: 'Козловская Анна', status: 'offline' },
+        { name: 'Шабанов Кирилл', status: 'online' }
+      ]
+    }
+  };
+
+  document.querySelectorAll('.team-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const teamKey = card.getAttribute('data-team');
+      const data = teamData[teamKey];
+      
+      document.getElementById('modalIcon').textContent = data.icon;
+      document.getElementById('modalTitle').textContent = data.title;
+      const teamList = document.getElementById('teamList');
+      teamList.innerHTML = '';
+      
+      data.members.forEach(member => {
+        const initials = member.name.split(' ').map(n => n[0]).join('');
+        const statusText = member.status === 'online' ? 'В сети' : 'Не в сети';
+        
+        const li = document.createElement('li');
+        li.className = 'team-member';
+        li.innerHTML = `
+          <div class="member-avatar">${initials}</div>
+          <div class="member-info">
+            <div class="member-name">${member.name}</div>
+            <div class="member-status">
+              <span class="status-dot ${member.status}"></span>
+              <span>${statusText}</span>
+            </div>
+          </div>
+        `;
+        teamList.appendChild(li);
+      });
+      
+      openModal('teamModal');
+    });
+  });
+
+  document.getElementById('contactForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (!localStorage.getItem('benetonit_user')) {
+      alert('Пожалуйста, войдите в систему или зарегистрируйтесь.');
+      return;
+    }
+    const btn = e.target.querySelector('.form-submit');
+    const original = btn.textContent;
+    btn.textContent = '✓ Заявка отправлена!';
+    btn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+    setTimeout(() => {
+      btn.textContent = original;
+      btn.style.background = '';
+      e.target.reset();
+      checkAuth();
+    }, 2500);
+  });
+
+  const phoneInput = document.getElementById('phone');
+  phoneInput.addEventListener('input', (e) => {
+    let v = e.target.value.replace(/\D/g, '');
+    if (v.startsWith('8')) v = '7' + v.slice(1);
+    if (!v.startsWith('7')) v = '7' + v;
+    v = v.slice(0, 11);
+    let formatted = '+7';
+    if (v.length > 1) formatted += ' (' + v.slice(1, 4);
+    if (v.length >= 5) formatted += ') ' + v.slice(4, 7);
+    if (v.length >= 8) formatted += '-' + v.slice(7, 9);
+    if (v.length >= 10) formatted += '-' + v.slice(9, 11);
+    e.target.value = formatted;
+  });
+
+  checkAuth();
+</script>
+
+</body>
+</html>
